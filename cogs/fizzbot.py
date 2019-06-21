@@ -22,7 +22,8 @@ class Nooper:
         """
         if not self.start:
             try:
-                self.question = self.noop.get_question()
+                noop = self.noop.get_question()
+                self.question = noop['message']
                 await ctx.send(self.question)
                 await ctx.send('Noops challenge started')
                 self.start = True
@@ -38,8 +39,15 @@ class Nooper:
         """
         try:
             if not self.qlock and self.start:
-                self.question = self.noop.get_question()
+                noop = self.noop.get_question()
+                self.question = noop['message']
                 await ctx.send(self.question)
+                try:
+                    rules = noop['rules']
+                    numbers = noop['numbers']
+                    await ctx.send('\n Rules {}\n Numbers {}'.format(rules, numbers))
+                except:
+                    pass
             else:
                 await ctx.send('Answer the previous question...\n {}'.format(self.question))
         except Exception as e:
