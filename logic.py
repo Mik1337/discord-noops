@@ -9,11 +9,12 @@ class fizz:
 
     def get_question(self):
         noop = rq.get(self.burl).json() # get the response
-        message = noop['message'] # message from response
-        print(self.burl, noop)
+        # message = noop['message'] # message from response
+        # rules = noop['rules']
+        # numbers = noop['numbers']
         # self.next = noop['nextQuestion'] # next quesion link
         self.burl = "https://api.noopschallenge.com/fizzbot/questions/1"
-        return message
+        return noop
 
     def send_answer(self, answer):
         data = json.dumps({'answer':answer}) # json-ify dict for post
