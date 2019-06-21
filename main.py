@@ -3,6 +3,7 @@
 from discord.ext import commands
 import discord.utils
 import discord
+import json
 
 client = discord.Client()
 bot = commands.Bot(command_prefix='noops ', description='Discord hackweek meets noops...')
@@ -30,7 +31,7 @@ async def stats(ctx):
 @bot.command()
 async def invite(ctx):
     """ sends invite link to bot """
-    rl = 'https://discordapp.com/oauth2/authorize?client_id=&scope=bot&permissions='
+    rl = 'https://discordapp.com/oauth2/authorize?client_id=591673432111054871&scope=bot&permissions=84992'
     msg = discord.Embed (
         title = 'Invite Link',
         description = 'Invite me to yer server with this >.<',
