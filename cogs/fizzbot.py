@@ -13,7 +13,10 @@ class Nooper:
         self.noop = fizz()
         self.qlock = False
         self.start = False
-        self.question = ''
+        self.example_format = "POST your answer back to this URL in JSON format. If you are having difficulties, see the exampleResponse provided."
+        self.rule_format = """\n\n{\n  "answer": "1 2 Fizz 4 Buzz"\n}"""
+
+        # self.question = ''
 
     @bot.command(pass_context=True, name="start")
     async def _start(self, ctx):
@@ -22,10 +25,10 @@ class Nooper:
         """
         if not self.start:
             try:
-                noop = self.noop.get_question()
-                self.question = noop['message']
-                await ctx.send(self.question)
-                await ctx.send('Noops challenge started')
+                noop = await self.noop.get_question()
+                # question = noop['message']
+                # await ctx.send(question)
+                await ctx.send(':rotating_light::rotating_light: :regional_indicator_n: :regional_indicator_o: :regional_indicator_o:  :regional_indicator_p: :regional_indicator_s:        :regional_indicator_c: :regional_indicator_h: :a: :regional_indicator_l: :regional_indicator_l: :regional_indicator_e: :regional_indicator_n: :regional_indicator_g: :regional_indicator_e:        :regional_indicator_s: :regional_indicator_t: :a: :regional_indicator_r: :regional_indicator_t: :regional_indicator_e: :regional_indicator_d: :rotating_light::rotating_light:')
                 self.start = True
             except Exception as e:
                 await ctx.send('something went wong in ask {}'.format(e))
@@ -39,32 +42,37 @@ class Nooper:
         """
         try:
             if not self.qlock and self.start:
-                noop = self.noop.get_question()
-                self.question = noop['message']
-                await ctx.send(self.question)
+                noop = await self.noop.get_question()
+                question = noop['message']
+                try:
+                    question = question.replace(self.example_format, " ")
+                    question = question.replace(self.rule_format, "\n``noops say 1 2 Fizz 4 Buzz``")
+                except Exception:
+                    pass
+                await ctx.send("```{}```".format(question))
                 try:
                     rules = noop['rules']
                     numbers = noop['numbers']
-                    await ctx.send('\n Rules {}\n Numbers {}'.format(rules, numbers))
+                    await ctx.send('\n Rules ```{}```\n Numbers ```{}```'.format(rules, numbers))
                 except:
                     pass
             else:
-                await ctx.send('Answer the previous question...\n {}'.format(self.question))
+                await ctx.send("Answer the previous question... or start the game\n")
         except Exception as e:
             await ctx.send('something went wong in ask {}'.format(e))
 
     @bot.command(pass_context=True)
-    async def send(self, ctx, *, message):
+    async def say(self, ctx, *, message):
         """
             You answer the noops bot's question.
         """
         try:
-            code = self.noop.send_answer(message)
+            code = await self.noop.send_answer(message)
             if code['result'] == 'correct':
                 await ctx.send("{}".format(code['message']))
                 self.qlock = False
             else:
-                await ctx.send("incorrect answer, try again... \n QUESTION \n{}".format(self.question))
+                await ctx.send("incorrect answer, try again... \n ps: check for missing values and typos")
                 self.qlock = True
         except Exception as e:
             await ctx.send('something went wong in send {}'.format(e))
