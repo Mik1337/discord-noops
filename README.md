@@ -1,14 +1,14 @@
 # discord-noops
 
-This is a badly written (intentional) bot for the [Discord Hack Week challenge](dis.gd/HackWeek) and [GitHub Noops challenge](https://github.co/noops)
+This is a badly written (intentional) bot for the [Discord Hack Week challenge](dis.gd/HackWeek) using [GitHub's Noops](https://github.co/noops)
 
 # Discord Hack Week Challenge
 Discord Shit Post bot
 
 # GitHub Noops Challenge
-[fizzbot](https://noopschallenge.com/challenges/fizzbot)
+check out [fizzbot](https://noopschallenge.com/challenges/fizzbot), the api stuf i used for dis bot
 
-# Usage
+# Bot Usage
 
 ## noops start
 
